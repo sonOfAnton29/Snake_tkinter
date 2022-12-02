@@ -26,14 +26,16 @@ class Snake:
         self.body_size = BODY_PARTS
         self.coordinates = []
         self.squares = []
+        self.ovals = []
 
         for i in range(0, BODY_PARTS):
             self.coordinates.append([0, 0])
         
         for x, y in self.coordinates:
-            square = canvas.create_rectangle(x, y, x + SPACE_SIZE, y + SPACE_SIZE, fill = SNAKE_COLOR, tag = "snake")
-            self.squares.append(square)
-
+            # square = canvas.create_rectangle(x, y, x + SPACE_SIZE, y + SPACE_SIZE, fill = SNAKE_COLOR, tag = "snake")
+            # self.squares.append(square)
+            oval = canvas.create_oval(x, y, x + SPACE_SIZE, y + SPACE_SIZE, fill = SNAKE_COLOR, tag = "snake")
+            self.ovals.append(oval)
 
 class Food:
     def __init__(self):
@@ -69,8 +71,10 @@ def next_turn(snake, food):
         x += SPACE_SIZE
     
     snake.coordinates.insert(0, (x, y))
-    square = canvas.create_rectangle(x, y, x + SPACE_SIZE, y + SPACE_SIZE, fill = SNAKE_COLOR)
-    snake.squares.insert(0, square)
+    # square = canvas.create_rectangle(x, y, x + SPACE_SIZE, y + SPACE_SIZE, fill = SNAKE_COLOR)
+    # snake.squares.insert(0, square)
+    oval = canvas.create_oval(x, y, x + SPACE_SIZE, y + SPACE_SIZE, fill = SNAKE_COLOR)
+    snake.ovals.insert(0, oval)
     
     if x == food.coordinates[0] and y == food.coordinates[1]:
         canvas.delete("food")
@@ -96,8 +100,10 @@ def next_turn(snake, food):
 
     else:
         del snake.coordinates[-1]
-        canvas.delete(snake.squares[-1])
-        del snake.squares[-1]
+        # canvas.delete(snake.squares[-1])
+        # del snake.squares[-1]
+        canvas.delete(snake.ovals[-1])
+        del snake.ovals[-1]
 
     if check_collision(snake):
         game_over()
